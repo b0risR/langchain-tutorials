@@ -10,6 +10,91 @@ This repository organizes course work by branch. `main` only holds this README; 
 ## `lca-lc-foundations` file structure
 
 ```
+├── agent-chat-ui/
+│   ├── .github/
+│   │   └── workflows/
+│   │       └── ci.yml
+│   ├── public/
+│   │   └── logo.png
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── api/
+│   │   │   │   └── [..._path]/
+│   │   │   │       └── route.ts
+│   │   │   ├── globals.css
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── components/
+│   │   │   ├── icons/
+│   │   │   │   ├── github.tsx
+│   │   │   │   └── langgraph.tsx
+│   │   │   ├── thread/
+│   │   │   │   ├── agent-inbox/
+│   │   │   │   │   ├── components/
+│   │   │   │   │   │   ├── inbox-item-input.tsx
+│   │   │   │   │   │   ├── state-view.tsx
+│   │   │   │   │   │   ├── thread-actions-view.tsx
+│   │   │   │   │   │   ├── thread-id.tsx
+│   │   │   │   │   │   └── tool-call-table.tsx
+│   │   │   │   │   ├── hooks/
+│   │   │   │   │   │   └── use-interrupted-actions.tsx
+│   │   │   │   │   ├── index.tsx
+│   │   │   │   │   ├── types.ts
+│   │   │   │   │   └── utils.ts
+│   │   │   │   ├── history/
+│   │   │   │   │   └── index.tsx
+│   │   │   │   ├── messages/
+│   │   │   │   │   ├── ai.tsx
+│   │   │   │   │   ├── generic-interrupt.tsx
+│   │   │   │   │   ├── human.tsx
+│   │   │   │   │   ├── shared.tsx
+│   │   │   │   │   └── tool-calls.tsx
+│   │   │   │   ├── artifact.tsx
+│   │   │   │   ├── ContentBlocksPreview.tsx
+│   │   │   │   ├── index.tsx
+│   │   │   │   ├── markdown-styles.css
+│   │   │   │   ├── markdown-text.tsx
+│   │   │   │   ├── MultimodalPreview.tsx
+│   │   │   │   ├── syntax-highlighter.tsx
+│   │   │   │   ├── tooltip-icon-button.tsx
+│   │   │   │   └── utils.ts
+│   │   │   └── ui/
+│   │   │       ├── avatar.tsx
+│   │   │       ├── button.tsx
+│   │   │       ├── card.tsx
+│   │   │       ├── input.tsx
+│   │   │       ├── label.tsx
+│   │   │       ├── password-input.tsx
+│   │   │       ├── separator.tsx
+│   │   │       ├── sheet.tsx
+│   │   │       ├── skeleton.tsx
+│   │   │       ├── sonner.tsx
+│   │   │       ├── switch.tsx
+│   │   │       ├── textarea.tsx
+│   │   │       └── tooltip.tsx
+│   │   ├── hooks/
+│   │   │   ├── use-file-upload.tsx
+│   │   │   └── useMediaQuery.tsx
+│   │   └── providers/
+│   │       ├── client.ts
+│   │       ├── Stream.tsx
+│   │       └── Thread.tsx
+│   ├── .codespellignore
+│   ├── .dockerignore
+│   ├── .env.example
+│   ├── .gitignore
+│   ├── .prettierignore
+│   ├── components.json
+│   ├── eslint.config.js
+│   ├── LICENSE
+│   ├── next.config.mjs
+│   ├── package.json
+│   ├── pnpm-lock.yaml
+│   ├── postcss.config.mjs
+│   ├── prettier.config.js
+│   ├── README.md
+│   ├── tailwind.config.js
+│   └── tsconfig.json
 ├── notebooks/
 │   ├── module-1/
 │   │   ├── resources/
@@ -37,91 +122,6 @@ This repository organizes course work by branch. `main` only holds this README; 
 │   │   ├── bonus_rag.ipynb
 │   │   └── bonus_sql.ipynb
 │   └── module-3/
-│       ├── agent-chat-ui/
-│       │   ├── .github/
-│       │   │   └── workflows/
-│       │   │       └── ci.yml
-│       │   ├── public/
-│       │   │   └── logo.png
-│       │   ├── src/
-│       │   │   ├── app/
-│       │   │   │   ├── api/
-│       │   │   │   │   └── [..._path]/
-│       │   │   │   │       └── route.ts
-│       │   │   │   ├── globals.css
-│       │   │   │   ├── layout.tsx
-│       │   │   │   └── page.tsx
-│       │   │   ├── components/
-│       │   │   │   ├── icons/
-│       │   │   │   │   ├── github.tsx
-│       │   │   │   │   └── langgraph.tsx
-│       │   │   │   ├── thread/
-│       │   │   │   │   ├── agent-inbox/
-│       │   │   │   │   │   ├── components/
-│       │   │   │   │   │   │   ├── inbox-item-input.tsx
-│       │   │   │   │   │   │   ├── state-view.tsx
-│       │   │   │   │   │   │   ├── thread-actions-view.tsx
-│       │   │   │   │   │   │   ├── thread-id.tsx
-│       │   │   │   │   │   │   └── tool-call-table.tsx
-│       │   │   │   │   │   ├── hooks/
-│       │   │   │   │   │   │   └── use-interrupted-actions.tsx
-│       │   │   │   │   │   ├── index.tsx
-│       │   │   │   │   │   ├── types.ts
-│       │   │   │   │   │   └── utils.ts
-│       │   │   │   │   ├── history/
-│       │   │   │   │   │   └── index.tsx
-│       │   │   │   │   ├── messages/
-│       │   │   │   │   │   ├── ai.tsx
-│       │   │   │   │   │   ├── generic-interrupt.tsx
-│       │   │   │   │   │   ├── human.tsx
-│       │   │   │   │   │   ├── shared.tsx
-│       │   │   │   │   │   └── tool-calls.tsx
-│       │   │   │   │   ├── artifact.tsx
-│       │   │   │   │   ├── ContentBlocksPreview.tsx
-│       │   │   │   │   ├── index.tsx
-│       │   │   │   │   ├── markdown-styles.css
-│       │   │   │   │   ├── markdown-text.tsx
-│       │   │   │   │   ├── MultimodalPreview.tsx
-│       │   │   │   │   ├── syntax-highlighter.tsx
-│       │   │   │   │   ├── tooltip-icon-button.tsx
-│       │   │   │   │   └── utils.ts
-│       │   │   │   └── ui/
-│       │   │   │       ├── avatar.tsx
-│       │   │   │       ├── button.tsx
-│       │   │   │       ├── card.tsx
-│       │   │   │       ├── input.tsx
-│       │   │   │       ├── label.tsx
-│       │   │   │       ├── password-input.tsx
-│       │   │   │       ├── separator.tsx
-│       │   │   │       ├── sheet.tsx
-│       │   │   │       ├── skeleton.tsx
-│       │   │   │       ├── sonner.tsx
-│       │   │   │       ├── switch.tsx
-│       │   │   │       ├── textarea.tsx
-│       │   │   │       └── tooltip.tsx
-│       │   │   ├── hooks/
-│       │   │   │   ├── use-file-upload.tsx
-│       │   │   │   └── useMediaQuery.tsx
-│       │   │   └── providers/
-│       │   │       ├── client.ts
-│       │   │       ├── Stream.tsx
-│       │   │       └── Thread.tsx
-│       │   ├── .codespellignore
-│       │   ├── .dockerignore
-│       │   ├── .env.example
-│       │   ├── .gitignore
-│       │   ├── .prettierignore
-│       │   ├── components.json
-│       │   ├── eslint.config.js
-│       │   ├── LICENSE
-│       │   ├── next.config.mjs
-│       │   ├── package.json
-│       │   ├── pnpm-lock.yaml
-│       │   ├── postcss.config.mjs
-│       │   ├── prettier.config.js
-│       │   ├── README.md
-│       │   ├── tailwind.config.js
-│       │   └── tsconfig.json
 │       ├── resources/
 │       │   └── Chinook.db
 │       ├── 3.2_managing_messages.ipynb
