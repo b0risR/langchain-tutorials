@@ -16,8 +16,9 @@ tavily_client = TavilyClient()
 # Tool for searching the web
 @mcp.tool()
 def search_web(query: str) -> dict[str, Any]:
-    """Search the web for information"""
-
+    """
+    Search the web for information
+    """
     results = tavily_client.search(query)
 
     return results
@@ -41,7 +42,9 @@ def github_file():
 # Prompt template
 @mcp.prompt()
 def prompt():
-    """Analyze data from a langchain-ai repo file with comprehensive insights"""
+    """
+    Analyze data from a langchain-ai repo file with comprehensive insights
+    """
     return """
     You are a helpful assistant that answers user questions about LangChain, LangGraph and LangSmith.
 
