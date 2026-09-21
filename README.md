@@ -1,8 +1,4 @@
-# 🔗 Introduction to LangChain - Python
-
-## Introduction
-
-Welcome to LangChain Academy's **Introduction to LangChain** course!
+# Introduction to LangChain - Python
 
 This repository is the companion to the course located [HERE](https://academy.langchain.com/courses/foundation-introduction-to-langchain-python).
 
@@ -21,6 +17,7 @@ This repository is the companion to the course located [HERE](https://academy.la
 ### Installation
 
 Download the course repository
+
 ```bash
 # Clone the repo
 git clone --depth 1 https://github.com/langchain-ai/lca-lc-foundations.git
@@ -28,6 +25,7 @@ cd lca-lc-foundations
 ```
 
 Make a copy of example.env
+
 ```bash
 # Create .env file
 cp example.env .env
@@ -152,6 +150,7 @@ langgraph dev
 </details>
 
 ## 📚 Lessons
+
 This repository contains three Modules that serve as introductions to many of LangChain's most-used features.
 
 ---
@@ -184,7 +183,7 @@ This repository contains three Modules that serve as introductions to many of La
 
 Layout of this branch of [`b0risR/langchain-tutorials`](https://github.com/b0risR/langchain-tutorials):
 
-```
+``` text
 ├── agent-chat-ui/
 │   ├── .github/
 │   │   └── workflows/
@@ -323,6 +322,7 @@ Layout of this branch of [`b0risR/langchain-tutorials`](https://github.com/b0ris
 ### Setup Verification Issues
 
 **What the verification procedure checks:**
+
 - ✅ Python executable location and version (must be >=3.12, <3.14)
 - ✅ Virtual environment is properly activated
 - ✅ Required packages are installed with correct versions
@@ -337,6 +337,7 @@ Layout of this branch of [`b0risR/langchain-tutorials`](https://github.com/b0ris
 If you see an error like `ModuleNotFoundError: No module named 'dotenv'`, you're likely running Python outside the virtual environment.
 
 **Solution:**
+
 - Use `uv run python env_utils.py` (recommended), or
 - Activate the virtual environment first:
   - macOS/Linux: `source .venv/bin/activate`
@@ -350,6 +351,7 @@ If you see an error like `ModuleNotFoundError: No module named 'dotenv'`, you're
 If you see a warning about "ENVIRONMENT VARIABLE CONFLICTS DETECTED", you have API keys set in your system environment that differ from your .env file. Since `load_dotenv()` doesn't override existing variables by default, your system values will be used.
 
 **Solutions:**
+
 1. Do nothing and accept the system environment variable value
 2. Unset the conflicting system environment variables for this shell session (commands provided in warning)
 3. Use `load_dotenv(override=True)` in your notebooks to force .env values to take precedence
@@ -361,6 +363,7 @@ If you see a warning about "ENVIRONMENT VARIABLE CONFLICTS DETECTED", you have A
 <summary>LangSmith Tracing Errors</summary>
 
 If you see "LANGSMITH_TRACING is enabled but LANGSMITH_API_KEY still has the example/placeholder value", you need to either:
+
 1. Set a valid LangSmith API key in your .env file, or
 2. Comment out or set `LANGSMITH_TRACING=false` in your .env file
 
@@ -374,6 +377,7 @@ Note: LangSmith is optional for evaluation and tracing. The course works without
 If you see a warning about Python version not satisfying requirements, you need Python >=3.12 and <3.14.
 
 **Solution:**
+
 - If using `uv`: Run `uv sync` which will automatically install the correct Python version
 - If using pip: Install Python 3.12 or 3.13 using [pyenv](#python-virtual-environments) or from [python.org](https://www.python.org/downloads/)
 
@@ -433,7 +437,6 @@ For more information on LangSmith, see our docs [here](https://docs.langchain.co
 This course uses the [dotenv](https://pypi.org/project/python-dotenv) module to read key-value pairs from the .env file and set them in the environment in the Jupyter notebooks. They do not need to be set globally in your system environment.
 
 **Note:** If you have API keys already set in your system environment, they may conflict with the ones in your .env file. The `env_utils.py` verification script will detect and warn you about such conflicts. By default, `load_dotenv()` does not override existing environment variables.
-
 
 ### Development Environment
 
