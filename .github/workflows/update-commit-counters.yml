@@ -1,0 +1,67 @@
+name: Update commit counters
+
+on:
+  push:
+    branches:
+      - main
+      - lca-lc-foundations
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-readme:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Fetch all branches
+        run: git fetch origin main lca-lc-foundations
+
+      - name: Update commit counts in README
+        run: |
+          MAIN_COUNT=$(git rev-list --count origin/main)
+          FOUNDATIONS_COUNT=$(git rev-list --count origin/lca-lc-foundations)
+
+          python3 - "$MAIN_COUNT" "$FOUNDATIONS_COUNT" <<'EOF'
+          import re
+          import sys
+
+          main_count, foundations_count = sys.argv[1], sys.argv[2]
+
+          with open("README.md") as f:
+              content = f.read()
+
+          block = (
+              "<!-- COMMIT-COUNTS:START -->\n"
+              "| Branch | Commits |\n"
+              "|---|---|\n"
+              f"| `main` | {main_count} |\n"
+              f"| `lca-lc-foundations` | {foundations_count} |\n"
+              "<!-- COMMIT-COUNTS:END -->"
+          )
+
+          content = re.sub(
+              r"<!-- COMMIT-COUNTS:START -->.*?<!-- COMMIT-COUNTS:END -->",
+              block,
+              content,
+              flags=re.DOTALL,
+          )
+
+          with open("README.md", "w") as f:
+              f.write(content)
+          EOF
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git diff --cached --quiet || git commit -m "chore: update commit counters [skip ci]"
+          git push origin HEAD:main
