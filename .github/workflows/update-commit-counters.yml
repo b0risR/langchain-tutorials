@@ -3,8 +3,10 @@ name: Update commit counters
 on:
   push:
     branches:
-      - main
-      - lca-lc-foundations
+      - "**"
+  delete:
+  schedule:
+    - cron: "0 3 * * *"
   workflow_dispatch:
 
 permissions:
@@ -12,7 +14,9 @@ permissions:
 
 jobs:
   update-readme:
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    if: >-
+      !contains(github.event.head_commit.message, '[skip ci]') &&
+      (github.event_name != 'delete' || github.event.ref_type == 'branch')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main
@@ -22,34 +26,46 @@ jobs:
           fetch-depth: 0
 
       - name: Fetch all branches
-        run: git fetch origin main lca-lc-foundations
+        run: git fetch origin '+refs/heads/*:refs/remotes/origin/*' --prune
 
       - name: Update commit counts in README
         run: |
-          MAIN_COUNT=$(git rev-list --count origin/main)
-          FOUNDATIONS_COUNT=$(git rev-list --count origin/lca-lc-foundations)
-
-          python3 - "$MAIN_COUNT" "$FOUNDATIONS_COUNT" <<'EOF'
+          python3 - <<'EOF'
           import re
-          import sys
+          import subprocess
 
-          main_count, foundations_count = sys.argv[1], sys.argv[2]
 
-          with open("README.md") as f:
-              content = f.read()
+          def git(*args):
+              return subprocess.check_output(["git", *args], text=True).strip()
 
+
+          branches = [
+              b.removeprefix("origin/")
+              for b in git(
+                  "for-each-ref", "refs/remotes/origin", "--format=%(refname:short)"
+              ).splitlines()
+              if b not in ("origin", "origin/HEAD")
+          ]
+          branches.sort(key=lambda b: (b != "main", b))
+
+          rows = "".join(
+              f"| `{b}` | {git('rev-list', '--count', 'origin/' + b)} |\n"
+              for b in branches
+          )
           block = (
               "<!-- COMMIT-COUNTS:START -->\n"
               "| Branch | Commits |\n"
               "|---|---|\n"
-              f"| `main` | {main_count} |\n"
-              f"| `lca-lc-foundations` | {foundations_count} |\n"
+              f"{rows}"
               "<!-- COMMIT-COUNTS:END -->"
           )
 
+          with open("README.md") as f:
+              content = f.read()
+
           content = re.sub(
               r"<!-- COMMIT-COUNTS:START -->.*?<!-- COMMIT-COUNTS:END -->",
-              block,
+              lambda _: block,
               content,
               flags=re.DOTALL,
           )
